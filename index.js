@@ -37,10 +37,10 @@ module.exports = exports = function(opts) {
 // 					configObject[elArray[0].trim()] = elArray[1].trim();
 					switch (elArray[0].trim()) {
 						case 'css_dir':
-							defaults.css = elArray[1].trim();
+							defaults.css = elArray[1].trim().replace(/(^")|("$)/g, '').replace(/(^')|('$)/g, '');
 							break;
 						case 'sass_dir':
-							defaults.sass = elArray[1].trim();
+							defaults.sass = elArray[1].trim().replace(/(^")|("$)/g, '').replace(/(^')|('$)/g, '');
 							break;
 					}
 				}
