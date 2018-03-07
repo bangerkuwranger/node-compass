@@ -17,7 +17,37 @@ var os = require('os'),
     fs = require('fs');
 
 module.exports = exports = function(opts) {
-  opts = opts || {};
+  	opts = opts || {};
+  	// If config file is specified, exists, and has values then we want them in defaults
+  	// Otherwise, checking the directory (which happens before config is specified) fails
+  	if (opts.config_file) {
+		var configString = false;
+		try {
+			configString = fs.readFileSync(path.resolve(opts[project] === undefined ? defaults.project : opts[project], opts.config_file)).toString();
+		}
+		catch(error) {
+			console.warn('File specified by config_file not found');
+		}
+		if (configString) {
+			var configArray = configString.split('\n');
+// 			var configObject = {};
+			for (let i = 0; i < configArray.length; i++) {
+				let elArray = configArray[i].split('=');
+				if ('string' === typeof elArray[0] && 'string' === typeof elArray[1]) {
+// 					configObject[elArray[0].trim()] = elArray[1].trim();
+					switch (elArray[0].trim()) {
+						case 'css_dir':
+							defaults.css = elArray[1].trim();
+							break;
+						case 'sass_dir':
+							defaults.sass = elArray[1].trim();
+							break;
+					}
+				}
+			}
+		}
+	}
+	
   for (var key in defaults) {
     if (opts[key] === undefined) {
       opts[key] = defaults[key];
