@@ -23,7 +23,7 @@ module.exports = exports = function(opts) {
   	if (opts.config_file) {
 		var configString = false;
 		try {
-			configString = fs.readFileSync(path.resolve(opts[project] === undefined ? defaults.project : opts[project], opts.config_file)).toString();
+			configString = fs.readFileSync(opts.config_file)).toString();
 		}
 		catch(error) {
 			console.warn('File specified by config_file not found');
